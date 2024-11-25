@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>FinancialStatementAnalyzer</title>
+</head>
+<div>
+    <h1>Financial News Sentiment Analyzer</h1>
+</div>
+<body>
+    <form action="/" method="post" id="analyze-form" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="text"><span class="required">*</span>Text to Analyze</label>
+            <textarea type="text" name="text" id="text" required>{{ request.form.get('text', '') }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="ticker">Ticker</label>
+            <input type="text" name="ticker" id="ticker" value="{{ request.form.get('ticker', '') }}" maxlength="5" pattern="[A-Z]{1,5}" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();">
+        </div>
+        <div>
+            <button type="submit">Analyze Sentiment</button>
+        </div>
+    </form>
+
+    <!-- Display the result -->
+    {% if result %}
+        <div class="result">
+            <h2>Sentiment Analysis Result</h2>
+
+            {% if result_type == 'extended' %}
+                <p><strong>Sentiment: </strong>{{ result.sentiment['overall_sentiment'] }}</p>
+                <p><strong>Percentage Price Change: </strong>{{ (result.price_changes['after']*100) | round(6) }}%</p>
+                <p><strong>Correlation: </strong>{{ result.correlation }}</p>
+            {% elif result_type == 'basic' %}
+                <p><strong>Sentiment: </strong>{{ result['overall_sentiment'] }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+    
+    <!-- Display the error message -->
+     {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <ul class="messages">
+                {% for category, message in messages %}
+                    <li class="{{ category}}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+     {% endwith %}
+</body>
+</html>
