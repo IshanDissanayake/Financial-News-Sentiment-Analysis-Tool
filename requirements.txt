@@ -61,7 +61,6 @@ pure_eval==0.2.3
 Pygments==2.18.0
 python-dateutil==2.9.0.post0
 pytz==2024.2
-pywin32==308
 PyYAML==6.0.2
 pyzmq==26.2.0
 regex==2024.11.6
@@ -73,10 +72,6 @@ six==1.16.0
 soupsieve==2.6
 stack-data==0.6.3
 sympy==1.13.1
-tensorboard==2.18.0
-tensorboard-data-server==0.7.2
-tensorflow==2.18.0
-tensorflow_intel==2.18.0
 termcolor==2.5.0
 tokenizers==0.20.3
 torch==2.5.1
